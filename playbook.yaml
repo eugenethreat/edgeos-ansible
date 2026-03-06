@@ -1,0 +1,27 @@
+- name: My first play
+  hosts: myhosts
+  tasks:
+    # - name: Ping my hosts
+    #   ansible.builtin.ping:
+
+    # - name: Print message
+    #   ansible.builtin.debug:
+    #     msg: Hello world
+
+    #  - name: test command
+    #    ansible.builtin.command: echo "test"
+
+    # - name: test command 2
+      # ansible.builtin.shell:
+    # - name: test command 3
+      # ansible.builtin.script:
+        #  cmd: configure_erx.sh
+
+    - name: test 4
+      community.network.edgeos_command: 
+        commands: |
+          configure
+          set system host-name newhostname
+          commit 
+          save 
+
