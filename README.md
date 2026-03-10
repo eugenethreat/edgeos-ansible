@@ -27,6 +27,19 @@ https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9
 https://docs.ansible.com/projects/ansible/latest/reference_appendices/release_and_maintenance.html 
 https://pypi.org/project/ansible/#history
 
+v3.0 edgeos also only has python 2.7 
+user~$ show system image     
+The system currently has the following image(s) installed:
+
+v3.0.0.5842787.250718.1058     (running image) (default boot) 
+v2.0.9-hotfix.7.5622731.230615.0857 
+
+user:~$ which python 
+/usr/bin/python
+user@host:~$ python --version
+Python 2.7.13
+
+
 install paramiko
   329  uv add paramiko
 https://github.com/paramiko/paramiko/issues/1936#issuecomment-981122850
@@ -34,7 +47,6 @@ https://github.com/paramiko/paramiko/issues/1936#issuecomment-981122850
 
 run the thing 
 uv run ansible-playbook -i inventory.yaml playbook.yaml
-
 
 ways to run commands:
 

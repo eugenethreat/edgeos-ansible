@@ -17,11 +17,72 @@
       # ansible.builtin.script:
         #  cmd: configure_erx.sh
 
+    # set static IP for yr host - 192.168.1.201 
+    # connect to router default subnet 192.168.1.1 
+
+    # default setup 
+      # keep initial user 
+      # change subnet to 192,.168.2.1 
+
+    # get addr via dhcp 
+
+    # unplug / refresh dhcp to get an ip address on a new subnet 
+
+    # change hostname 
+
+    # change LAN subnet 
+
+    # create DHCP servers 
+
+    # create VLANS for each DHCP server 
+
+    # enable vlan aware switching 
+
+    # create firewall rules 
+
     - name: test 4
       community.network.edgeos_command: 
         commands: |
           configure
           set system host-name newhostname
+          
+          set service dhcp-server shared-network-name LAN subnet 10.0.0.1/24 default-router 10.0.0.1
+          set service dhcp-server shared-network-name LAN subnet 10.0.0.1/24 dns-server 1.1.1.1 
+          set service dhcp-server shared-network-name LAN subnet 10.0.0.1/24 lease 86400       
+          set service dhcp-server shared-network-name LAN subnet 10.0.0.1/24 start 10.0.0.1 stop 10.0.0.255
+
+          delete service dhcp-server shared-network-name LAN subnet 192.168.2.0/24 
+          
+          set interfaces switch switch0 address 10.0.0.1/24
+          delete interfaces switch switch0 address 192.168.2.1/24
+
+          set interfaces switch switch0 vif 110 address 10.110.0.1/24
+          set service dhcp-server shared-network-name PCW_MGMT_DHCP subnet 10.110.0.1/24 start 10.110.0.10 stop 10.110.0.150
+          set service dhcp-server shared-network-name PCW_MGMT_DHCP subnet 10.110.0.1/24 default-router 10.110.0.1
+          set service dhcp-server shared-network-name PCW_MGMT_DHCP subnet 10.110.0.1/24 dns-server 1.1.1.1
+
+          set interfaces switch switch0 vif 111 address 10.111.0.1/24
+          set service dhcp-server shared-network-name PCW_CLIENT_DHCP subnet 10.111.0.1/24 start 10.111.0.10 stop 10.111.0.150
+          set service dhcp-server shared-network-name PCW_CLIENT_DHCP subnet 10.111.0.1/24 default-router 10.111.0.1
+          set service dhcp-server shared-network-name PCW_CLIENT_DHCP subnet 10.111.0.1/24 dns-server 1.1.1.1
+
+          set interfaces switch switch0 vif 112 address 10.112.0.1/24
+          set service dhcp-server shared-network-name PCW_IOT_DHCP subnet 10.112.0.1/24 start 10.112.0.10 stop 10.112.0.150
+          set service dhcp-server shared-network-name PCW_IOT_DHCP subnet 10.112.0.1/24 default-router 10.112.0.1
+          set service dhcp-server shared-network-name PCW_IOT_DHCP subnet 10.112.0.1/24 dns-server 1.1.1.1
+
+          set interfaces switch switch0 vif 113 address 10.113.0.1/24
+          set service dhcp-server shared-network-name PCW_PRIVATE_DHCP subnet 10.113.0.1/24 start 10.113.0.10 stop 10.113.0.150
+          set service dhcp-server shared-network-name PCW_PRIVATE_DHCP subnet 10.113.0.1/24 default-router 10.113.0.1
+          set service dhcp-server shared-network-name PCW_PRIVATE_DHCP subnet 10.113.0.1/24 dns-server 1.1.1.1
+
+          set interfaces switch switch0 switch-port vlan-aware enable
+          set interfaces switch switch0 switch-port interface eth2 vlan vid 1
+          set interfaces switch switch0 switch-port interface eth2 vlan vid 110
+          set interfaces switch switch0 switch-port interface eth2 vlan vid 111
+          set interfaces switch switch0 switch-port interface eth2 vlan vid 112
+          set interfaces switch switch0 switch-port interface eth2 vlan vid 113
+
           commit 
           save 
 
