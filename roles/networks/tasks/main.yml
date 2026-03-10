@@ -1,0 +1,40 @@
+
+- name: Update interfaces 
+  community.network.edgeos_command:
+    commands: | 
+      set service dhcp-server shared-network-name LAN subnet {{ sw_subnet }} default-router {{ sw_router }}
+      set service dhcp-server shared-network-name LAN subnet {{ sw_subnet }} dns-server 1.1.1.1 
+      set service dhcp-server shared-network-name LAN subnet {{ sw_subnet }} lease 86400       
+      set service dhcp-server shared-network-name LAN subnet {{ sw_subnet }} start {{ sw_router }} stop {{ sw_range_end }}
+
+      delete service dhcp-server shared-network-name LAN subnet 192.168.2.0/24 
+      
+      set interfaces switch switch0 address {{ sw_subnet }}
+      delete interfaces switch switch0 address 192.168.2.1/24
+
+      set interfaces switch switch0 vif 110 address {{ mgmt_subnet }}
+      set service dhcp-server shared-network-name PCW_MGMT_DHCP subnet {{ mgmt_subnet }} start {{ mgmt_router }} stop {{ mgmt_range_end }}
+      set service dhcp-server shared-network-name PCW_MGMT_DHCP subnet {{ mgmt_subnet }} default-router {{ mgmt_router }}
+      set service dhcp-server shared-network-name PCW_MGMT_DHCP subnet {{ mgmt_subnet }} dns-server 1.1.1.1
+
+      set interfaces switch switch0 vif 111 address {{ client_subnet }}
+      set service dhcp-server shared-network-name PCW_CLIENT_DHCP subnet {{ client_subnet }} start {{ client_router }} stop {{ client_range_end }}
+      set service dhcp-server shared-network-name PCW_CLIENT_DHCP subnet {{ client_subnet }} default-router {{ client_router }}
+      set service dhcp-server shared-network-name PCW_CLIENT_DHCP subnet {{ client_subnet }} dns-server 1.1.1.1
+
+      set interfaces switch switch0 vif 112 address {{ iot_subnet }}
+      set service dhcp-server shared-network-name PCW_IOT_DHCP subnet {{ iot_subnet }} start {{ iot_router }} stop {{ iot_range_end }}
+      set service dhcp-server shared-network-name PCW_IOT_DHCP subnet {{ iot_subnet }} default-router {{ iot_router }}
+      set service dhcp-server shared-network-name PCW_IOT_DHCP subnet {{ iot_subnet }} dns-server 1.1.1.1
+
+      set interfaces switch switch0 vif 113 address {{ private_subnet }}
+      set service dhcp-server shared-network-name PCW_PRIVATE_DHCP subnet {{ private_subnet }} start {{ private_router }} stop {{ private_range_end }}
+      set service dhcp-server shared-network-name PCW_PRIVATE_DHCP subnet {{ private_subnet }} default-router {{ private_router }}
+      set service dhcp-server shared-network-name PCW_PRIVATE_DHCP subnet {{ private_subnet }} dns-server 1.1.1.1
+
+      set interfaces switch switch0 switch-port vlan-aware enable
+      set interfaces switch switch0 switch-port interface eth2 vlan vid 1
+      set interfaces switch switch0 switch-port interface eth2 vlan vid 110
+      set interfaces switch switch0 switch-port interface eth2 vlan vid 111
+      set interfaces switch switch0 switch-port interface eth2 vlan vid 112
+      set interfaces switch switch0 switch-port interface eth2 vlan vid 113

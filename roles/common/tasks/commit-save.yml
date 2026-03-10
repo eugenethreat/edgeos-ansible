@@ -1,0 +1,5 @@
+- name: commit and save changes
+  community.network.edgeos_command:
+  commands: |
+    commit 
+    save 

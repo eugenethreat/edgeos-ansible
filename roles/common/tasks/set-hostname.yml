@@ -1,0 +1,4 @@
+- name: Set hostname 
+  community.network.edgeos_command: 
+    commands: |
+      set system host-name {{ hostname }}
