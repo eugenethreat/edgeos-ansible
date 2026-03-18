@@ -1,9 +1,17 @@
 - name: Configure EdgeOS router
   hosts: myhosts
   roles:
-    - common
-    - networks
-    - firewall
-    - save
+    - role: common 
+      tags: 
+        - always
+    - role: networks
+      # tags: 
+    - role: firewall
+      # tags: 
+    - role: ssh_restrict
+      # tags:  
+    - role: save
+      tags:
+        - always
 
 

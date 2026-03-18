@@ -1,0 +1,26 @@
+- name: Block SSH from client VLAN (non-management)
+  community.network.edgeos_command:
+    commands: |
+      set firewall name clients_local rule 20 action reject
+      set firewall name clients_local rule 20 description "Block SSH from client VLAN to router"
+      set firewall name clients_local rule 20 source group address-group NETv4_switch0.111
+      set firewall name clients_local rule 20 destination port 22
+      set firewall name clients_local rule 20 protocol tcp
+
+- name: Block SSH from IoT VLAN (non-management)
+  community.network.edgeos_command:
+    commands: |
+      set firewall name iot_local rule 20 action reject
+      set firewall name iot_local rule 20 description "Block SSH from IoT VLAN to router"
+      set firewall name iot_local rule 20 source group address-group NETv4_switch0.112
+      set firewall name iot_local rule 20 destination port 22
+      set firewall name iot_local rule 20 protocol tcp
+
+- name: Block SSH from private VLAN (non-management)
+  community.network.edgeos_command:
+    commands: |
+      set firewall name private_local rule 20 action reject
+      set firewall name private_local rule 20 description "Block SSH from private VLAN to router"
+      set firewall name private_local rule 20 source group address-group NETv4_switch0.113
+      set firewall name private_local rule 20 destination port 22
+      set firewall name private_local rule 20 protocol tcp
