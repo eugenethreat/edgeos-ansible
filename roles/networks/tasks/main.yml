@@ -33,8 +33,22 @@
       set service dhcp-server shared-network-name PCW_PRIVATE_DHCP subnet {{ private_subnet }} dns-server 1.1.1.1
 
       set interfaces switch switch0 switch-port vlan-aware enable
+      set interfaces switch switch0 switch-port interface eth1 vlan vid 1
+      set interfaces switch switch0 switch-port interface eth1 vlan vid 110
+      set interfaces switch switch0 switch-port interface eth1 vlan vid 111
+      set interfaces switch switch0 switch-port interface eth1 vlan vid 112
+      set interfaces switch switch0 switch-port interface eth1 vlan vid 113
+
       set interfaces switch switch0 switch-port interface eth2 vlan vid 1
       set interfaces switch switch0 switch-port interface eth2 vlan vid 110
       set interfaces switch switch0 switch-port interface eth2 vlan vid 111
       set interfaces switch switch0 switch-port interface eth2 vlan vid 112
       set interfaces switch switch0 switch-port interface eth2 vlan vid 113
+
+      set interfaces switch switch0 switch-port interface eth3 vlan vid 1
+      set interfaces switch switch0 switch-port interface eth3 vlan vid 110
+      set interfaces switch switch0 switch-port interface eth3 vlan vid 111
+      set interfaces switch switch0 switch-port interface eth3 vlan vid 112
+      set interfaces switch switch0 switch-port interface eth3 vlan vid 113
+
+      
