@@ -1,0 +1,14 @@
+- name: Configure UISP on EdgeOS
+  hosts: myhosts
+  roles:
+    - role: common 
+      tags: 
+        - always
+    - role: uisp 
+      tags: 
+        - always 
+    - role: save
+      tags:
+        - always
+
+

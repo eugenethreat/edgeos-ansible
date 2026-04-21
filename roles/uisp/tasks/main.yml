@@ -1,0 +1,5 @@
+- name: Adopt to UISP
+  community.network.edgeos_command: 
+    commands: |
+      set service unms connection {{ unms_key }}
+      
